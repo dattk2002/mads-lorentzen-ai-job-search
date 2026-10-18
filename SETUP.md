@@ -155,16 +155,25 @@ prove fonts or packages are installed. See [verification notes](docs/codex-verif
 ### Personal work: private remote first
 
 If you want remote backup for personalized profiles, create a separate **private**
-repository. From a fresh clone of this public fork, with no existing private origin:
+repository **before personal setup**. From a fresh, unpersonalized clone of this
+public fork, with no existing private origin:
 
 ```bash
 git remote rename origin public-fork
+git remote set-url --push public-fork DISABLED
 gh repo create <your-github-username>/my-job-search --private --source=. --remote=origin
+git config remote.pushDefault origin
+git push --set-upstream origin HEAD
 gh repo set-default <your-github-username>/my-job-search
 git remote -v
 ```
 
-Verify the new origin is private before committing and pushing personal material.
+The initial push copies only the framework templates. It also moves the current
+branch's upstream to private `origin`; renaming the old remote alone would leave
+plain `git push` targeting the public fork. Pushes to `public-fork` are disabled,
+but it remains usable for fetching updates. If any step fails, stop and resolve it
+before personal setup. Verify the new origin is private before committing and
+pushing personal material.
 Review exactly what is staged; ignored documents are not a substitute for checking
 tracked profile/template changes. Keeping commits local without pushing is fine.
 

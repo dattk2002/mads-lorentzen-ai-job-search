@@ -11,7 +11,7 @@ personal application was generated. This record separates those checks.
 | Check | Result |
 |---|---|
 | Original Python baseline | 647 tests, 24 conditional skips, no failures |
-| Python suite with Codex changes | 659 tests, 24 conditional skips, no failures |
+| Python suite with Codex changes | 660 tests, 24 conditional skips, no failures |
 | Portal CLI TypeScript checks | All six passed |
 | Portal fixture/mock tests | 421 passed, no failures, no live portal requests |
 | Skill validator | New `job-search` skill passed |
@@ -21,8 +21,8 @@ personal application was generated. This record separates those checks.
 | Local dependency check | Setup available; stock PDF compilers absent |
 | Codex CLI 0.163.0 read-only smoke | Discovered `$job-search`, loaded adapter and setup source |
 
-The full Python run reports skipped tests explicitly. Upstream-only placeholder
-checks and optional dependencies are conditional; a skip is not a passing test.
+The 24 skips comprise 17 optional `openpyxl` tests (dependency absent locally)
+and seven upstream-only placeholder tests. A skip is not a passing test.
 
 ## Behavior checks
 
@@ -45,6 +45,14 @@ The new dependency tests were observed failing before implementation and passing
 afterward. The route test catches missing/upstream-added workflows and wrong
 source paths. The scraper contract test now identifies portals by CLI manifests,
 so names such as `job-search` do not turn orchestration into a phantom portal.
+
+A final independent review found that renaming a public remote does not reset a
+branch's push destination. A regression test executed the guide's Git steps
+against two local bare repositories and reproduced a plain push going public.
+The corrected recipe disables the public push URL, sets private `origin` as the
+push default, and establishes its upstream with an initial explicit push. The
+same test then passed, followed by the full 660-test Python suite. The fixture
+uses synthetic candidate text only and never contacts GitHub.
 
 ## Reproduce automated checks
 

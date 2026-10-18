@@ -34,6 +34,12 @@ invent a tool invocation. Keep the existing robots-policy checker as an addition
 conservative gate; its legacy `Claude-User` checks never override Codex/browser
 access restrictions or authorize bypassing a denied request.
 
+For `scrape` portal discovery, enumerate `.agents/skills/*/cli/package.json`,
+then read each owning portal's `SKILL.md` and honor its `enabled` flag. A skill
+name ending in `-search` is not enough: `job-search` is the orchestration entrypoint
+and has no portal CLI. This narrows the upstream instruction to read every skill
+to actual portal packages, matching the installer and CI discovery.
+
 ## Reviewer and PDF requirements
 
 For `apply`, preserve the independent reviewer stage: pass the posting, profile

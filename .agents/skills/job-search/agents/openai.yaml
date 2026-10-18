@@ -1,0 +1,4 @@
+interface:
+  display_name: "Job Search"
+  short_description: "Find jobs and prepare applications with Codex"
+  default_prompt: "Use $job-search to help with my next job-search task."
